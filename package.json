@@ -1,13 +1,13 @@
 {
   "name": "DesafioSquad",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
     "dev:server": "ts-node-dev -r tsconfig-paths/register --ignore node_modules src/server.ts  ",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
-    "start": "node src/server.js"
+    "start": "tsc && node src/server.js"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -34,6 +34,7 @@
     "celebrate": "^12.2.0",
     "class-transformer": "^0.3.1",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^8.5.1",

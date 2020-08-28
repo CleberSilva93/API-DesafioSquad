@@ -6,9 +6,9 @@ import { getRepository } from 'typeorm';
 import User from '../../typeorm/schemas/User';
 import UsersRepository from '../../typeorm/repositories/UserRepository';
 
-const signUp = Router();
+const signup = Router();
 
-signUp.post(
+signup.post(
   '/',
   celebrate({
     [Segments.BODY]: {
@@ -40,4 +40,4 @@ signUp.post(
   },
 );
 
-export default signUp;
+export default signup;
