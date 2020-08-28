@@ -2,7 +2,7 @@
 {
   "name": "default",
   "type": "mongodb",
-  "host": "mongodb+srv://deploy:cleber23@cluster0.gzxwt.mongodb.net/<dbname>?retryWrites=true&w=majority",
+  "host": "mongodb+srv://deploy:cleber23@cluster0.gzxwt.mongodb.net/Project?retryWrites=true&w=majority",
   "database": "teste2",
   "useUnifiedTopology": true,
   "entities": [
