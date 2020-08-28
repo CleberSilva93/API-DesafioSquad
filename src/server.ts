@@ -3,9 +3,9 @@ import 'express-async-errors';
 // import 'dotenv/config';
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
-import { errors } from 'celebrate';
-import AppError from './errors/AppError';
-import routes from './routes';
+// import { errors } from 'celebrate';
+// import AppError from './errors/AppError';
+// import routes from './routes';
 import './database';
 
 const app = express();
@@ -29,6 +29,6 @@ app.use(express.json());
 //     });
 //   },
 // );
-app.listen(process.env.PORT || 3000, () => {
+app.listen(3333, () => {
   console.log('Server Started on Port 3333');
 });
