@@ -3,7 +3,6 @@
   "name": "default",
   "type": "mongodb",
   "host": "mongodb+srv://deploy:cleber23@cluster0.gzxwt.mongodb.net/<dbname>?retryWrites=true&w=majority",
-  "port": 27017,
   "database": "teste2",
   "useUnifiedTopology": true,
   "entities": [
