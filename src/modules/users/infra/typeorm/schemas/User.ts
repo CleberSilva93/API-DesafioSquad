@@ -9,6 +9,8 @@ import {
   ObjectID,
 } from 'typeorm';
 
+import { Exclude, Expose } from 'class-transformer';
+
 @Entity('userss')
 class User {
   @ObjectIdColumn()
@@ -20,9 +22,11 @@ class User {
   @Column()
   email: string;
 
+  @Exclude()
   @Column()
   senha: string;
 
+  @Expose()
   @Column()
   last_at: Date;
 

@@ -1,9 +1,8 @@
 /* eslint-disable no-undef */
-import { getRepository, Repository, getCustomRepository } from 'typeorm';
+
 import { hash } from 'bcryptjs';
-// import AppError from 'errors/AppError';
 import UserRepository from '@modules/users/infra/typeorm/repositories/UserRepository';
-import { response } from 'express';
+import AppError from '../../../errors/AppError';
 import User from '../infra/typeorm/schemas/User';
 
 interface IRequest {
@@ -27,7 +26,7 @@ class CreateUser {
   }: IRequest): Promise<User | null> {
     const checkUserExists = await this.users.findByEmail(email);
     if (checkUserExists) {
-      return null;
+      throw new AppError('E=mail já existente.');
     }
 
     const hashSenha = await hash(senha, 8);

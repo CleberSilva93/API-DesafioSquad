@@ -2,7 +2,7 @@
 {
   "name": "default",
   "type": "mongodb",
-  "host": "localhost",
+  "host": "mongodb+srv://deploy:<password>@cluster0.gzxwt.mongodb.net/<dbname>?retryWrites=true&w=majority",
   "port": 27017,
   "database": "teste2",
   "useUnifiedTopology": true,

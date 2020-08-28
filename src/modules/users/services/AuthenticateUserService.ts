@@ -1,8 +1,8 @@
 import { getRepository, ObjectID } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign, verify } from 'jsonwebtoken';
-import User from '@modules/users/infra/typeorm/schemas/User;
-import UserRepository from '@modules/users/infra/typeorm/repositories/UserRepository;
+import User from '@modules/users/infra/typeorm/schemas/User';
+import UserRepository from '@modules/users/infra/typeorm/repositories/UserRepository';
 
 import AppError from '../../../errors/AppError';
 
@@ -29,17 +29,14 @@ class AuthenticateUserService {
     }
 
     if (!user) {
-      throw new AppError('Incorrect email/password combination.');
+      throw new AppError('Usuário e/ou senha inválidos', 403);
     }
-    // user.password senha criptografada
-    // password - senha não criptografada
 
     const passwordMatched = await compare(senha, user.senha);
 
     if (!passwordMatched) {
-      throw new AppError('Incorrect email/password combination.');
+      throw new AppError('Usuário e/ou senha inválidos', 403);
     }
-    // Usuário authenticado
 
     const { secret, expiresIn } = authConfig.jwt;
 

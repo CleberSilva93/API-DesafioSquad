@@ -1,6 +1,6 @@
 import { getMongoRepository, MongoRepository, Not } from 'typeorm';
-import IUsersRepository from '@modules/users/repositories/IUserRepository;
-import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO;
+import IUsersRepository from '@modules/users/repositories/IUserRepository';
+import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 
 import User from '../schemas/User';
 
