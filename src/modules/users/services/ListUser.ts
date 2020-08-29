@@ -1,6 +1,6 @@
-import User from '@modules/users/infra/typeorm/schemas/User';
 import { getCustomRepository } from 'typeorm';
-import AppError from 'errors/AppError';
+import AppError from '../../../errors/AppError';
+import User from '../infra/typeorm/schemas/User';
 import UserRepository from '../infra/typeorm/repositories/UserRepository';
 
 interface IRequest {

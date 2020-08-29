@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
-import ListUser from '@modules/users/services/ListUser';
-import CreateUser from '@modules/users/services/CreateUser';
 import { celebrate, Segments, Joi } from 'celebrate';
 import { getRepository } from 'typeorm';
+import CreateUser from '../../../services/CreateUser';
+import ListUser from '../../../services/ListUser';
 import AuthenticateUserService from '../../../services/AuthenticateUserService';
 import User from '../../typeorm/schemas/User';
 import UsersRepository from '../../typeorm/repositories/UserRepository';

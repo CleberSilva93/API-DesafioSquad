@@ -1,8 +1,8 @@
 import { getRepository, ObjectID } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign, verify } from 'jsonwebtoken';
-import User from '@modules/users/infra/typeorm/schemas/User';
-import UserRepository from '@modules/users/infra/typeorm/repositories/UserRepository';
+import User from '../infra/typeorm/schemas/User';
+import UserRepository from '../infra/typeorm/repositories/UserRepository';
 
 import AppError from '../../../errors/AppError';
 

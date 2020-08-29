@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 
 import { hash } from 'bcryptjs';
-import UserRepository from '@modules/users/infra/typeorm/repositories/UserRepository';
+import UserRepository from '../infra/typeorm/repositories/UserRepository';
 import AppError from '../../../errors/AppError';
 import User from '../infra/typeorm/schemas/User';
 
