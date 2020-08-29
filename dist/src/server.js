@@ -18,6 +18,7 @@ app.use(express_1.default.json());
 app.use(routes_1.default);
 app.use(celebrate_1.errors());
 app.use(function (err, request, response, next) {
+    console.log('Esta aqui!');
     if (err instanceof AppError_1.default) {
         return response.status(err.statusCode).json({
             status: 'error',
@@ -30,6 +31,6 @@ app.use(function (err, request, response, next) {
         message: 'Internal server error',
     });
 });
-app.listen(process.env.PORT || 3000, function () {
+app.listen(3333, function () {
     console.log('Server Started on Port 3333');
 });

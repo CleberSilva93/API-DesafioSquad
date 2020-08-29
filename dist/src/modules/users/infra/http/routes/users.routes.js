@@ -46,7 +46,7 @@ var CreateUser_1 = __importDefault(require("../../../services/CreateUser"));
 var ListUser_1 = __importDefault(require("../../../services/ListUser"));
 var AuthenticateUserService_1 = __importDefault(require("../../../services/AuthenticateUserService"));
 var users = express_1.Router();
-users.get('/', function (request, response) { return __awaiter(void 0, void 0, void 0, function () {
+users.get('/g', function (request, response) { return __awaiter(void 0, void 0, void 0, function () {
     var name_1, listUser, user, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -60,12 +60,12 @@ users.get('/', function (request, response) { return __awaiter(void 0, void 0, v
                 return [2 /*return*/, user];
             case 2:
                 err_1 = _a.sent();
-                return [2 /*return*/, response.status(err_1.statusCode).json({ error: err_1.message })];
+                return [2 /*return*/, response.status(400).json({ error: err_1.message })];
             case 3: return [2 /*return*/];
         }
     });
 }); });
-users.post('/', celebrate_1.celebrate((_a = {},
+users.post('/c', celebrate_1.celebrate((_a = {},
     _a[celebrate_1.Segments.BODY] = {
         nome: celebrate_1.Joi.string().required(),
         senha: celebrate_1.Joi.string().required(),
@@ -77,9 +77,13 @@ users.post('/', celebrate_1.celebrate((_a = {},
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _b.trys.push([0, 2, , 3]);
+                console.log('Chega até aq?');
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 3, , 4]);
                 _a = request.body, nome = _a.nome, senha = _a.senha, email = _a.email, telefone = _a.telefone;
                 createUser = new CreateUser_1.default();
+                console.log('Chega até aq?2');
                 return [4 /*yield*/, createUser.execute({
                         nome: nome,
                         email: email,
@@ -89,17 +93,17 @@ users.post('/', celebrate_1.celebrate((_a = {},
                         update_at: new Date(),
                         last_at: new Date(),
                     })];
-            case 1:
+            case 2:
                 user = _b.sent();
                 return [2 /*return*/, response.json(user)];
-            case 2:
+            case 3:
                 err_2 = _b.sent();
-                return [2 /*return*/, response.status(err_2.statusCode).json({ error: err_2.message })];
-            case 3: return [2 /*return*/];
+                return [2 /*return*/, response.status(400).json({ error: err_2.message })];
+            case 4: return [2 /*return*/];
         }
     });
 }); });
-users.post('/', function (request, response) { return __awaiter(void 0, void 0, void 0, function () {
+users.post('/a', function (request, response) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, email, senha, authenticateUser, _b, user, token, err_3;
     return __generator(this, function (_c) {
         switch (_c.label) {
@@ -118,7 +122,7 @@ users.post('/', function (request, response) { return __awaiter(void 0, void 0, 
                 return [3 /*break*/, 3];
             case 2:
                 err_3 = _c.sent();
-                return [2 /*return*/, response.status(err_3.statusCode).json({ error: err_3.message })];
+                return [2 /*return*/, response.status(400).json({ error: err_3.message })];
             case 3: return [2 /*return*/];
         }
     });
