@@ -1,10 +1,11 @@
-
 {
   "type": "mongodb",
-  "host": "mongodb+srv://teste:teste@cluster0.gzxwt.mongodb.net/Project?retryWrites=true&w=majority",
-  "useNewUrlParser": true,
+  "url": "mongodb+srv://teste:teste@cluster0.gzxwt.mongodb.net/Project?retryWrites=true&w=majority",
+  "useNewUrlParser": false,
+  "port": 27017,
   "synchronize": true,
   "useUnifiedTopology": true,
+  "authSource": "teste",
   "logging": true,
   "ssl": true,
   "entities": ["./src/modules/**/infra/typeorm/schemas/*.ts"]

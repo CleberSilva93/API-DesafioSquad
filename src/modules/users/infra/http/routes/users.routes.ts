@@ -10,7 +10,7 @@ import UsersRepository from '../../typeorm/repositories/UserRepository';
 
 const users = Router();
 
-users.get('/', async (request, response) => {
+users.get('/g', async (request, response) => {
   try {
     const { name } = request.body;
 
@@ -20,12 +20,12 @@ users.get('/', async (request, response) => {
 
     return user;
   } catch (err) {
-    return response.status(err.statusCode).json({ error: err.message });
+    return response.status(400).json({ error: err.message });
   }
 });
 
 users.post(
-  '/',
+  '/c',
   celebrate({
     [Segments.BODY]: {
       nome: Joi.string().required(),
@@ -35,10 +35,11 @@ users.post(
     },
   }),
   async (request, response) => {
+    console.log('Chega até aq?');
     try {
       const { nome, senha, email, telefone } = request.body;
       const createUser = new CreateUser();
-
+      console.log('Chega até aq?2');
       const user = await createUser.execute({
         nome,
         email,
@@ -51,12 +52,12 @@ users.post(
 
       return response.json(user);
     } catch (err) {
-      return response.status(err.statusCode).json({ error: err.message });
+      return response.status(400).json({ error: err.message });
     }
   },
 );
 
-users.post('/', async (request, response) => {
+users.post('/a', async (request, response) => {
   try {
     const { email, senha } = request.body;
 
@@ -70,7 +71,7 @@ users.post('/', async (request, response) => {
     // delete user.senha;
     response.json({ user, token });
   } catch (err) {
-    return response.status(err.statusCode).json({ error: err.message });
+    return response.status(400).json({ error: err.message });
   }
 });
 

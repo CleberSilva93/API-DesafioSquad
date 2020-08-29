@@ -8,7 +8,9 @@ class UsersRepository implements IUsersRepository {
   private ormRepository: MongoRepository<User>;
 
   constructor() {
+    console.log('chega aqui?22:');
     this.ormRepository = getMongoRepository(User);
+    console.log('chega aqui?223:');
   }
 
   public async findById(id: string): Promise<User | undefined> {
@@ -34,8 +36,9 @@ class UsersRepository implements IUsersRepository {
   }
 
   public async create(userData: ICreateUserDTO): Promise<User> {
+    console.log('Chegou qui1');
     const appointment = this.ormRepository.create(userData);
-
+    console.log('Chegou qui2');
     await this.ormRepository.save(appointment);
 
     return appointment;

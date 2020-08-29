@@ -16,6 +16,7 @@ app.use(routes);
 app.use(errors());
 app.use(
   (err: Error, request: Request, response: Response, next: NextFunction) => {
+    console.log('Esta aqui!');
     if (err instanceof AppError) {
       return response.status(err.statusCode).json({
         status: 'error',
@@ -29,6 +30,6 @@ app.use(
     });
   },
 );
-app.listen(process.env.PORT || 3000, () => {
+app.listen(3333, () => {
   console.log('Server Started on Port 3333');
 });
