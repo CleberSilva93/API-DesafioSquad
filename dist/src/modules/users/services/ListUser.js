@@ -40,7 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var typeorm_1 = require("typeorm");
-var AppError_1 = __importDefault(require("errors/AppError"));
+var AppError_1 = __importDefault(require("../../../errors/AppError"));
 var UserRepository_1 = __importDefault(require("../infra/typeorm/repositories/UserRepository"));
 var ListUser = /** @class */ (function () {
     function ListUser() {

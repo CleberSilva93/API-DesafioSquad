@@ -41,7 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var bcryptjs_1 = require("bcryptjs");
-var UserRepository_1 = __importDefault(require("@modules/users/infra/typeorm/repositories/UserRepository"));
+var UserRepository_1 = __importDefault(require("../infra/typeorm/repositories/UserRepository"));
 var AppError_1 = __importDefault(require("../../../errors/AppError"));
 var CreateUser = /** @class */ (function () {
     function CreateUser() {

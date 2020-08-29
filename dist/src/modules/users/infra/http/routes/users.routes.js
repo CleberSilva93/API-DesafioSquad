@@ -41,9 +41,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
-var ListUser_1 = __importDefault(require("@modules/users/services/ListUser"));
-var CreateUser_1 = __importDefault(require("@modules/users/services/CreateUser"));
 var celebrate_1 = require("celebrate");
+var CreateUser_1 = __importDefault(require("../../../services/CreateUser"));
+var ListUser_1 = __importDefault(require("../../../services/ListUser"));
 var AuthenticateUserService_1 = __importDefault(require("../../../services/AuthenticateUserService"));
 var users = express_1.Router();
 users.get('/', function (request, response) { return __awaiter(void 0, void 0, void 0, function () {
