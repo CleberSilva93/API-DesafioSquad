@@ -27,10 +27,10 @@ export default function ensureAuthenticated(
     const decoded = verify(token, authConfig.jwt.secret);
     console.log(decoded);
 
-    const { sub } = decoded as tokenPayLoad;
-    request.user = {
-      id: sub,
-    };
+    // const { sub } = decoded as tokenPayLoad;
+    // request.user = {
+    //   id: sub,
+    // };
 
     return next();
   } catch (err) {

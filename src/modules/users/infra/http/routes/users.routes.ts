@@ -5,12 +5,13 @@ import { getRepository } from 'typeorm';
 import CreateUser from '../../../services/CreateUser';
 import ListUser from '../../../services/ListUser';
 import AuthenticateUserService from '../../../services/AuthenticateUserService';
+import ensureAuthenticated from '../../../../../middlewares/ensureAuthenticated';
 import User from '../../typeorm/schemas/User';
 import UsersRepository from '../../typeorm/repositories/UserRepository';
 
 const users = Router();
 
-users.get('/list', async (request, response) => {
+users.get('/list', ensureAuthenticated, async (request, response) => {
   try {
     const { name } = request.body;
 
