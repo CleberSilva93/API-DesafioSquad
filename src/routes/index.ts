@@ -8,8 +8,7 @@ import users from '../modules/users/infra/http/routes/users.routes';
 const routes = Router();
 
 // routes.use('/signin', signInRouter);
-routes.use('/signup', users);
-routes.use('/user', users);
-routes.use('/signin', users);
+routes.use('/', users);
+// routes.use('/', users);
 
 export default routes;

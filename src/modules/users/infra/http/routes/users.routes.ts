@@ -10,7 +10,7 @@ import UsersRepository from '../../typeorm/repositories/UserRepository';
 
 const users = Router();
 
-users.get('/g', async (request, response) => {
+users.get('/list', async (request, response) => {
   try {
     const { name } = request.body;
 
@@ -25,7 +25,7 @@ users.get('/g', async (request, response) => {
 });
 
 users.post(
-  '/c',
+  '/signup',
   celebrate({
     [Segments.BODY]: {
       nome: Joi.string().required(),
@@ -57,7 +57,7 @@ users.post(
   },
 );
 
-users.post('/a', async (request, response) => {
+users.post('/signin', async (request, response) => {
   try {
     const { email, senha } = request.body;
 
