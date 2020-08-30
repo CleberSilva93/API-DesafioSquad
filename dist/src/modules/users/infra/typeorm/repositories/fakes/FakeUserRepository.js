@@ -39,59 +39,70 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var jsonwebtoken_1 = require("jsonwebtoken");
-var date_fns_1 = require("date-fns");
-var auth_1 = __importDefault(require("../config/auth"));
-var AppError_1 = __importDefault(require("../errors/AppError"));
-var UserRepository_1 = __importDefault(require("../modules/users/infra/typeorm/repositories/UserRepository"));
-function ensureAuthenticated(request, response, next) {
-    return __awaiter(this, void 0, void 0, function () {
-        var users, authHeader, id, _a, token, decoded, sub, user, compareDate, err_1;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    users = new UserRepository_1.default();
-                    authHeader = request.headers.authorization;
-                    id = request.params.id;
-                    if (!authHeader) {
-                        throw new AppError_1.default('Não autorizado', 401);
-                    }
-                    _a = authHeader.split(' '), token = _a[1];
-                    _b.label = 1;
-                case 1:
-                    _b.trys.push([1, 3, , 4]);
-                    decoded = jsonwebtoken_1.verify(token, auth_1.default.jwt.secret);
-                    sub = decoded.sub;
-                    request.user = {
-                        id: sub,
-                    };
-                    return [4 /*yield*/, users.findByEmail(sub)];
-                case 2:
-                    user = _b.sent();
-                    if (user === null || user === void 0 ? void 0 : user.id) {
-                        if (id !== user.id.toString()) {
-                            throw new AppError_1.default('Não autorizado.', 401);
-                        }
-                    }
-                    compareDate = (user === null || user === void 0 ? void 0 : user.last_at) ? date_fns_1.differenceInMinutes(user.last_at, new Date())
-                        : undefined;
-                    if (compareDate) {
-                        if (compareDate > 30) {
-                            throw new AppError_1.default('Sessão inválida', 401);
-                        }
-                    }
-                    return [2 /*return*/, next()];
-                case 3:
-                    err_1 = _b.sent();
-                    if (err_1.message) {
-                        throw new AppError_1.default(err_1.message, 401);
-                    }
-                    else
-                        throw new AppError_1.default('Invalid token', 401);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
-            }
+var User_1 = __importDefault(require("../../schemas/User"));
+var FakeUserRepository = /** @class */ (function () {
+    function FakeUserRepository() {
+        this.users = [];
+    }
+    FakeUserRepository.prototype.findById = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userId;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.users.find(function (user) {
+                            if (user.id) {
+                                if (user.id.toString() === id) {
+                                    return user;
+                                }
+                            }
+                        })];
+                    case 1:
+                        userId = _a.sent();
+                        return [2 /*return*/, userId];
+                }
+            });
         });
-    });
-}
-exports.default = ensureAuthenticated;
+    };
+    FakeUserRepository.prototype.findByName = function (nome) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userNome;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.users.find(function (user) { return user.nome === nome; })];
+                    case 1:
+                        userNome = _a.sent();
+                        return [2 /*return*/, userNome];
+                }
+            });
+        });
+    };
+    FakeUserRepository.prototype.findByEmail = function (email) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userEmail;
+            return __generator(this, function (_a) {
+                userEmail = this.users.find(function (user) { return user.email === email; });
+                return [2 /*return*/, userEmail];
+            });
+        });
+    };
+    FakeUserRepository.prototype.create = function (_a) {
+        var nome = _a.nome, email = _a.email, senha = _a.senha, telefone = _a.telefone;
+        return __awaiter(this, void 0, void 0, function () {
+            var user;
+            return __generator(this, function (_b) {
+                user = new User_1.default();
+                user.email = email;
+                user.nome = nome;
+                user.senha = senha;
+                user.telefone = telefone;
+                user.created_at = new Date();
+                user.last_at = new Date();
+                user.updated_at = new Date();
+                this.users.push(user);
+                return [2 /*return*/, user];
+            });
+        });
+    };
+    return FakeUserRepository;
+}());
+exports.default = FakeUserRepository;

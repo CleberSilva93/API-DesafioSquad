@@ -14,5 +14,5 @@ typeorm_1.createConnection({
     useUnifiedTopology: true,
     logger: 'advanced-console',
     logging: 'all',
-    entities: ['./src/modules/users/infra/typeorm/schemas/User.js'],
+    entities: ['./src/modules/**/infra/typeorm/schemas/*.ts'],
 });

@@ -43,9 +43,7 @@ var typeorm_1 = require("typeorm");
 var User_1 = __importDefault(require("../schemas/User"));
 var UsersRepository = /** @class */ (function () {
     function UsersRepository() {
-        console.log('chega aqui?22:');
         this.ormRepository = typeorm_1.getMongoRepository(User_1.default);
-        console.log('chega aqui?223:');
     }
     UsersRepository.prototype.findById = function (id) {
         return __awaiter(this, void 0, void 0, function () {
@@ -92,17 +90,15 @@ var UsersRepository = /** @class */ (function () {
     };
     UsersRepository.prototype.create = function (userData) {
         return __awaiter(this, void 0, void 0, function () {
-            var appointment;
+            var user;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log('Chegou qui1');
-                        appointment = this.ormRepository.create(userData);
-                        console.log('Chegou qui2');
-                        return [4 /*yield*/, this.ormRepository.save(appointment)];
+                        user = this.ormRepository.create(userData);
+                        return [4 /*yield*/, this.ormRepository.save(user)];
                     case 1:
                         _a.sent();
-                        return [2 /*return*/, appointment];
+                        return [2 /*return*/, user];
                 }
             });
         });

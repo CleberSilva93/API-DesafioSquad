@@ -1,25 +1,28 @@
 import { Router } from 'express';
+import { format } from 'date-fns';
 
 import { celebrate, Segments, Joi } from 'celebrate';
-import { getRepository } from 'typeorm';
+import { container } from 'tsyringe';
 import CreateUser from '../../../services/CreateUser';
 import ListUser from '../../../services/ListUser';
 import AuthenticateUserService from '../../../services/AuthenticateUserService';
 import ensureAuthenticated from '../../../../../middlewares/ensureAuthenticated';
-import User from '../../typeorm/schemas/User';
-import UsersRepository from '../../typeorm/repositories/UserRepository';
 
 const users = Router();
 
-users.get('/list', ensureAuthenticated, async (request, response) => {
+users.get('/search/:id', ensureAuthenticated, async (request, response) => {
   try {
-    const { name } = request.body;
+    const { id } = request.params;
+    const listUser = container.resolve(ListUser);
 
-    const listUser = new ListUser();
-
-    const user = await listUser.execute(name);
-
-    return user;
+    const user = await listUser.execute(id);
+    return response.json({
+      Nome: user?.nome,
+      Email: user?.email,
+      Last_at: user?.last_at
+        ? format(user.last_at, "dd/MM/yyyy 'às' HH:mm")
+        : undefined,
+    });
   } catch (err) {
     return response.status(400).json({ error: err.message });
   }
@@ -36,11 +39,9 @@ users.post(
     },
   }),
   async (request, response) => {
-    console.log('Chega até aq?');
     try {
       const { nome, senha, email, telefone } = request.body;
-      const createUser = new CreateUser();
-      console.log('Chega até aq?2');
+      const createUser = container.resolve(CreateUser);
       const user = await createUser.execute({
         nome,
         email,
@@ -62,15 +63,14 @@ users.post('/signin', async (request, response) => {
   try {
     const { email, senha } = request.body;
 
-    const authenticateUser = new AuthenticateUserService();
+    const authenticateUser = container.resolve(AuthenticateUserService);
 
     const { user, token } = await authenticateUser.execute({
       email,
       senha,
     });
 
-    // delete user.senha;
-    response.json({ user, token });
+    response.status(201).json({ user, token });
   } catch (err) {
     return response.status(400).json({ error: err.message });
   }

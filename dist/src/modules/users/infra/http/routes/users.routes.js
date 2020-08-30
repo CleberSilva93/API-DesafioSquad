@@ -41,23 +41,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
+var date_fns_1 = require("date-fns");
 var celebrate_1 = require("celebrate");
+var tsyringe_1 = require("tsyringe");
 var CreateUser_1 = __importDefault(require("../../../services/CreateUser"));
 var ListUser_1 = __importDefault(require("../../../services/ListUser"));
 var AuthenticateUserService_1 = __importDefault(require("../../../services/AuthenticateUserService"));
+var ensureAuthenticated_1 = __importDefault(require("../../../../../middlewares/ensureAuthenticated"));
 var users = express_1.Router();
-users.get('/g', function (request, response) { return __awaiter(void 0, void 0, void 0, function () {
-    var name_1, listUser, user, err_1;
+users.get('/search/:id', ensureAuthenticated_1.default, function (request, response) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, listUser, user, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                name_1 = request.body.name;
-                listUser = new ListUser_1.default();
-                return [4 /*yield*/, listUser.execute(name_1)];
+                id = request.params.id;
+                listUser = tsyringe_1.container.resolve(ListUser_1.default);
+                return [4 /*yield*/, listUser.execute(id)];
             case 1:
                 user = _a.sent();
-                return [2 /*return*/, user];
+                return [2 /*return*/, response.json({
+                        Nome: user === null || user === void 0 ? void 0 : user.nome,
+                        Email: user === null || user === void 0 ? void 0 : user.email,
+                        Last_at: (user === null || user === void 0 ? void 0 : user.last_at) ? date_fns_1.format(user.last_at, "dd/MM/yyyy 'às' HH:mm")
+                            : undefined,
+                    })];
             case 2:
                 err_1 = _a.sent();
                 return [2 /*return*/, response.status(400).json({ error: err_1.message })];
@@ -65,7 +73,7 @@ users.get('/g', function (request, response) { return __awaiter(void 0, void 0, 
         }
     });
 }); });
-users.post('/c', celebrate_1.celebrate((_a = {},
+users.post('/signup', celebrate_1.celebrate((_a = {},
     _a[celebrate_1.Segments.BODY] = {
         nome: celebrate_1.Joi.string().required(),
         senha: celebrate_1.Joi.string().required(),
@@ -77,13 +85,9 @@ users.post('/c', celebrate_1.celebrate((_a = {},
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                console.log('Chega até aq?');
-                _b.label = 1;
-            case 1:
-                _b.trys.push([1, 3, , 4]);
+                _b.trys.push([0, 2, , 3]);
                 _a = request.body, nome = _a.nome, senha = _a.senha, email = _a.email, telefone = _a.telefone;
-                createUser = new CreateUser_1.default();
-                console.log('Chega até aq?2');
+                createUser = tsyringe_1.container.resolve(CreateUser_1.default);
                 return [4 /*yield*/, createUser.execute({
                         nome: nome,
                         email: email,
@@ -93,32 +97,31 @@ users.post('/c', celebrate_1.celebrate((_a = {},
                         update_at: new Date(),
                         last_at: new Date(),
                     })];
-            case 2:
+            case 1:
                 user = _b.sent();
                 return [2 /*return*/, response.json(user)];
-            case 3:
+            case 2:
                 err_2 = _b.sent();
                 return [2 /*return*/, response.status(400).json({ error: err_2.message })];
-            case 4: return [2 /*return*/];
+            case 3: return [2 /*return*/];
         }
     });
 }); });
-users.post('/a', function (request, response) { return __awaiter(void 0, void 0, void 0, function () {
+users.post('/signin', function (request, response) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, email, senha, authenticateUser, _b, user, token, err_3;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
                 _c.trys.push([0, 2, , 3]);
                 _a = request.body, email = _a.email, senha = _a.senha;
-                authenticateUser = new AuthenticateUserService_1.default();
+                authenticateUser = tsyringe_1.container.resolve(AuthenticateUserService_1.default);
                 return [4 /*yield*/, authenticateUser.execute({
                         email: email,
                         senha: senha,
                     })];
             case 1:
                 _b = _c.sent(), user = _b.user, token = _b.token;
-                // delete user.senha;
-                response.json({ user: user, token: token });
+                response.status(201).json({ user: user, token: token });
                 return [3 /*break*/, 3];
             case 2:
                 err_3 = _c.sent();

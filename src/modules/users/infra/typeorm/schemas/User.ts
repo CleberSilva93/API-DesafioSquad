@@ -2,7 +2,6 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
   ObjectIdColumn,
@@ -11,7 +10,7 @@ import {
 
 import { Exclude, Expose } from 'class-transformer';
 
-@Entity('userss')
+@Entity('users')
 class User {
   @ObjectIdColumn()
   id: ObjectID;
@@ -31,7 +30,7 @@ class User {
   last_at: Date;
 
   @Column()
-  telefones: string;
+  telefone: string;
 
   @CreateDateColumn()
   created_at: Date;

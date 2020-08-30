@@ -1,9 +1,4 @@
-import { createConnection, Connection } from 'typeorm';
-import path from 'path';
-
-const user = process.env.DB_USER;
-const userPassword = process.env.DB_USER_PASSWORD;
-const cluster = process.env.DB_CLUSTER;
+import { createConnection } from 'typeorm';
 
 const uri = `mongodb+srv://teste:teste@cluster0.gzxwt.mongodb.net/Project?retryWrites=true&w=majority`;
 createConnection({

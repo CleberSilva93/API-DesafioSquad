@@ -1,4 +1,16 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -41,12 +53,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var bcryptjs_1 = require("bcryptjs");
 var jsonwebtoken_1 = require("jsonwebtoken");
-var UserRepository_1 = __importDefault(require("../infra/typeorm/repositories/UserRepository"));
+var tsyringe_1 = require("tsyringe");
 var AppError_1 = __importDefault(require("../../../errors/AppError"));
 var auth_1 = __importDefault(require("../../../config/auth"));
 var AuthenticateUserService = /** @class */ (function () {
-    function AuthenticateUserService() {
-        this.users = new UserRepository_1.default();
+    function AuthenticateUserService(users) {
+        this.users = users;
     }
     AuthenticateUserService.prototype.execute = function (_a) {
         var email = _a.email, senha = _a.senha;
@@ -59,6 +71,9 @@ var AuthenticateUserService = /** @class */ (function () {
                         user = _c.sent();
                         if (user) {
                             user.last_at = new Date();
+                        }
+                        if (!(user === null || user === void 0 ? void 0 : user.senha)) {
+                            throw new AppError_1.default('Usuário e/ou senha inválidos', 403);
                         }
                         if (!user) {
                             throw new AppError_1.default('Usuário e/ou senha inválidos', 403);
@@ -82,6 +97,11 @@ var AuthenticateUserService = /** @class */ (function () {
             });
         });
     };
+    AuthenticateUserService = __decorate([
+        tsyringe_1.injectable(),
+        __param(0, tsyringe_1.inject('UserRepository')),
+        __metadata("design:paramtypes", [Object])
+    ], AuthenticateUserService);
     return AuthenticateUserService;
 }());
 exports.default = AuthenticateUserService;

@@ -40,7 +40,7 @@ var User = /** @class */ (function () {
     __decorate([
         typeorm_1.Column(),
         __metadata("design:type", String)
-    ], User.prototype, "telefones", void 0);
+    ], User.prototype, "telefone", void 0);
     __decorate([
         typeorm_1.CreateDateColumn(),
         __metadata("design:type", Date)
@@ -50,7 +50,7 @@ var User = /** @class */ (function () {
         __metadata("design:type", Date)
     ], User.prototype, "updated_at", void 0);
     User = __decorate([
-        typeorm_1.Entity('userss')
+        typeorm_1.Entity('users')
     ], User);
     return User;
 }());

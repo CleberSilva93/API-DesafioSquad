@@ -1,20 +1,19 @@
-import { getCustomRepository } from 'typeorm';
+import { injectable, inject } from 'tsyringe';
 import AppError from '../../../errors/AppError';
 import User from '../infra/typeorm/schemas/User';
-import UserRepository from '../infra/typeorm/repositories/UserRepository';
+import IUserRepository from '../repositories/IUserRepository';
 
-interface IRequest {
-  nome: string;
-}
-
+@injectable()
 class ListUser {
-  private users = getCustomRepository(UserRepository);
+  constructor(
+    @inject('UserRepository')
+    private users: IUserRepository,
+  ) {}
 
-  public async execute({ nome }: IRequest): Promise<User | undefined> {
-    const user = await this.users.findByName(nome);
-
+  public async execute(id: string): Promise<User | undefined> {
+    const user = await this.users.findById(id);
     if (!user) {
-      throw new AppError('');
+      throw new AppError(' Usuário não existente');
     }
     return user;
   }

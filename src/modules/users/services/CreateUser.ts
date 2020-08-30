@@ -1,9 +1,9 @@
-/* eslint-disable no-undef */
-
+/* eslint-disable no-useless-constructor */
 import { hash } from 'bcryptjs';
-import UserRepository from '../infra/typeorm/repositories/UserRepository';
+import { inject, injectable } from 'tsyringe';
 import AppError from '../../../errors/AppError';
 import User from '../infra/typeorm/schemas/User';
+import IUserRepository from '../repositories/IUserRepository';
 
 interface IRequest {
   nome: string;
@@ -15,8 +15,12 @@ interface IRequest {
   update_at: Date;
 }
 
+@injectable()
 class CreateUser {
-  private users = new UserRepository();
+  constructor(
+    @inject('UserRepository')
+    private users: IUserRepository,
+  ) {}
 
   public async execute({
     nome,
